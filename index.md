@@ -80,3 +80,43 @@ I then made individual plots using R package "ggplot". I replced the [SITE] with
   xlab("Date") +
   labs(title = "[SITE] Water Temperature Over Time")</code>
 
+### **Mean Temperatures by Sites**
+![Image](https://github.com/user-attachments/assets/cd3de1f3-d9e1-4b7a-b232-3b68af5d6bcd)
+
+![Image](https://github.com/user-attachments/assets/2c4e37b4-3b56-4de3-abb9-04e6712cca4a)
+
+![Image](https://github.com/user-attachments/assets/1402c019-f8c4-4728-b07c-bb3fa0475e09)
+
+### **Variance of Temperatures by Sites**
+
+![Image](https://github.com/user-attachments/assets/3566c2e0-c10d-4e6b-bacc-48508310a0d8)
+
+![Image](https://github.com/user-attachments/assets/be035efc-e3c3-4c0e-a9db-89bc7ec06da0)
+
+![Image](https://github.com/user-attachments/assets/85a65282-38e2-4a50-b5ca-21274bb93c6b)
+
+I then made a plot with all the sites combined for... <br>
+
+Water Temperature Mean
+<code>TempAllSites <- bind_rows(BARC_data, SUGG_data, TOMB_data)</code>
+
+<code>ggplot(TempAllSites, aes(x = dateTime, y = tsdWaterTempMean, color = siteID)) +
+  geom_point(size = 0.1, alpha = 0.1) +  # alpha = transparency (0 = invisible, 1 = fully opaque)
+  theme_classic() +
+  xlab("Date") +
+  ylab("Water Temperature Mean") +
+  guides(color = guide_legend(override.aes = list(size = 6))) +
+  labs(title = "Surface Water Temp Mean at BARC, SUGG, and TOMB")</code>
+
+
+Water Temperature Variance
+<code>PhytoAllSites <- bind_rows(phyto_data_BARC, phyto_data_SUGG, phyto_data_TOMB)</code>
+
+<code>ggplot(PhytoAllSites, aes(x = collectDate, y = adjAshFreeDryMass, color = siteID)) +
+  geom_point(size = 1, alpha = 1) +
+  theme_classic() +
+  xlab("Date") +
+  ylab("Ash Free Dry Mass Amounts") +
+  labs(title = "Ash Free Dry Mass Amounts Over Time at BARC, SUGG, and TOMB")</code>
+
+
