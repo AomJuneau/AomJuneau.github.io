@@ -8,7 +8,7 @@ I am a senior at Agnes Scott College, pursuing a degree in Biology. I am current
 
 ---
 
-## Data Intensive Ecology Project
+## My Data Intensive Ecology Project
 My project is called Investigating Phytoplankton Population Changes and Algae Bloom Occurrences with NEON Data. <br>
 
 
@@ -196,8 +196,33 @@ I looked at the Ash Free Dry Mass Amounts to compare with the temperature means 
 
 <code>LnModelTempMean <- lm(AFDM ~ tsdTempMean6, data = Algae_Final)</code>
 
-Here is what I received: 
+Here is what I received: <br>
 <code>Multiple R-squared:  0.006015,	Adjusted R-squared:  -0.0216 
 F-statistic: 0.2178 on 1 and 36 DF,  p-value: 0.6435</code>
 
+![Image](https://github.com/user-attachments/assets/ee3880c9-a172-42d1-8a31-c4eca6b04ab4)
 
+I then looked at the Ash Free Dry Mass Amounts to compare with the temperature mean variance of the past 6 months of each ash free dry mass record
+
+<code>LnModelTempVar <- lm(AFDM ~ tsdTempVariance6, data = Algae_Final)</code>
+
+Here is what I received: <br>
+<code>Multiple R-squared:  0.02099,	Adjusted R-squared:  -0.006206 
+F-statistic: 0.7718 on 1 and 36 DF,  p-value: 0.3855</code>
+
+![Image](https://github.com/user-attachments/assets/9e5164b1-3354-4b2d-9b2c-e857d0405765)
+
+
+### Discussion
+
+Overall, this showed that there was no significance in the past 6 month temperature means and variances to the levels of ash free dry mass collected on the algae.
+
+* phytoplankton biomass as represented by AFDM may **not** be directly driven by thermal conditions alone
+* lack of correlation could indicate that **other ecological factors**—such as nutrient availability, light intensity, hydrological conditions, or interspecies competition
+* six-month averaging period may obscure shorter-term thermal events that could more strongly influence algal dynamics <br>
+
+#### Future Directions
+* implement a broader set of environmental variables and finer-scale temporal analyses
+* try different method of alg population counts outside of Ash Free Dry Mass
+* find database with recorded algae blooms
+* look for more NEON sites because the used NEON sites may not be prone to algae blooms and may not be affective for studying algae blooms and algae population changes
