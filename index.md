@@ -163,6 +163,24 @@ I then made individual plots using R package "ggplot". I replaced the [SITE] wit
 
 ### **Ash Free Dry Mass Amounts by Sites**
 
+![Image](https://github.com/user-attachments/assets/939a7aaf-a9a9-412d-818e-aadfbb05c1ab)
+
+![Image](https://github.com/user-attachments/assets/64e86da9-bcec-4e33-885a-ffbd37479e31)
+
+![Image](https://github.com/user-attachments/assets/67fb8117-1ec6-45af-a3b8-dd809f2aec5f)
+
+I then made a plot with all the sites combined <br>
+
+<code>PhytoAllSites <- bind_rows(phyto_data_BARC, phyto_data_SUGG, phyto_data_TOMB)</code>
+
+<code>ggplot(PhytoAllSites, aes(x = collectDate, y = adjAshFreeDryMass, color = siteID)) +
+  geom_point(size = 1, alpha = 1) +
+  theme_classic() +
+  xlab("Date") +
+  ylab("Ash Free Dry Mass Amounts") +
+  labs(title = "Ash Free Dry Mass Amounts Over Time at BARC, SUGG, and TOMB")</code>
+
+![Image](https://github.com/user-attachments/assets/4caf2641-825a-4f84-910d-0b27f2fea23b) <br>
 
 Afterwards, I prepped the data for analysis:
 
@@ -173,5 +191,13 @@ Afterwards, I prepped the data for analysis:
 5. Plot, create linear model, summarized linear model
 
 
+### Analysing the Data
+I looked at the Ash Free Dry Mass Amounts to compare with the temperature means of the past 6 months of each ash free dry mass record
+
+<code>LnModelTempMean <- lm(AFDM ~ tsdTempMean6, data = Algae_Final)</code>
+
+Here is what I received: 
+<code>Multiple R-squared:  0.006015,	Adjusted R-squared:  -0.0216 
+F-statistic: 0.2178 on 1 and 36 DF,  p-value: 0.6435</code>
 
 
