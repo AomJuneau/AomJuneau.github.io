@@ -72,7 +72,7 @@ then seperated and named by site using: <br>
   filter(grepl("TOMB", siteID, ignore.case = TRUE))</code>
 
 
-I then made individual plots using R package "ggplot". I replced the [SITE] with each site name and [Mean/Variance] with either one depending on which plot I was aiming to make.
+I then made individual plots using R package "ggplot". I replaced the [SITE] with each site name and [Mean/Variance] with either one depending on which plot I was aiming to make.
 <code>ggplot([SITE]_data, aes(x=dateTime, y=tsdWaterTemp[Mean/Variance])) +
   geom_point(size=.2, color="forestgreen") +
   theme_classic() +
@@ -108,6 +108,7 @@ Water Temperature Mean
   guides(color = guide_legend(override.aes = list(size = 6))) +
   labs(title = "Surface Water Temp Mean at BARC, SUGG, and TOMB")</code>
 
+![Image](https://github.com/user-attachments/assets/34732da9-6bbd-4f5a-b2da-01bd1b1249a7)
 
 Water Temperature Variance
 <code>PhytoAllSites <- bind_rows(phyto_data_BARC, phyto_data_SUGG, phyto_data_TOMB)</code>
@@ -118,5 +119,59 @@ Water Temperature Variance
   xlab("Date") +
   ylab("Ash Free Dry Mass Amounts") +
   labs(title = "Ash Free Dry Mass Amounts Over Time at BARC, SUGG, and TOMB")</code>
+
+![Image](https://github.com/user-attachments/assets/94363639-c9c9-4b47-ac1b-51f097d820fb)
+
+#### Wrangling the Algae Data
+
+To download the Temperature at Specific Depth in Surface Water Data, I used: <br>
+<code>alg <- loadByProduct(dpID = "DP1.20166.001", site=c("TOMB", "BARC", "SUGG", ), 
+                     startdate = "2021-01", enddate="2022-12", 
+                     token = Sys.getenv("NEON_TOKEN"),
+                     check.size = F)</code>
+
+Extracted only the things I wanted by using: <br>
+<code>algbiomass <- alg$alg_biomass  #algae biomass</code>
+
+<code>afdm <- alg$alg_biomass$adjAshFreeDryMass #algae ash free dry mass</code>
+
+<code>AlgSampleID <- alg$alg_biomass$parentSampleID</code>
+
+
+then seperated and named by site using: <br>
+* <code>phyto_data_SUGG <- alg$alg_biomass %>%
+  filter(grepl("PHYTOPLANKTON", parentSampleID, ignore.case = TRUE)) %>%
+  filter(grepl("SUGG", siteID, ignore.case = TRUE))</code>
+
+* <code>phyto_data_BARC <- alg$alg_biomass %>%
+  filter(grepl("PHYTOPLANKTON", parentSampleID, ignore.case = TRUE)) %>%
+  filter(grepl("BARC", siteID, ignore.case = TRUE))</code>
+
+* <code>phyto_data_TOMB <- alg$alg_biomass %>%
+  filter(grepl("PHYTOPLANKTON", parentSampleID, ignore.case = TRUE)) %>%
+  filter(grepl("TOMB", siteID, ignore.case = TRUE))</code>
+
+
+I then made individual plots using R package "ggplot". I replaced the [SITE] with each site name. <br>
+<code>plot(
+  phyto_data_[SITE]$collectDate, phyto_data_[SITE]$adjAshFreeDryMass,
+  col = "darkgreen", type = "p",
+  xlab = "Date", ylab = "Ash Free Dry Mass",
+  main = paste0("[SITE] Ash Free Dry Mass Amounts by Time"),
+  pch = 16, 
+  cex = 1)</code>
+
+### **Ash Free Dry Mass Amounts by Sites**
+
+
+Afterwards, I prepped the data for analysis:
+
+1. Backdated the collectDate 6mo from AshFreeDryMass
+2. Made range of dates (backDate - collectDate)
+3. Made range of temps at those dates
+4. Created means of temp means and temp variance
+5. Plot, create linear model, summarized linear model
+
+
 
 
